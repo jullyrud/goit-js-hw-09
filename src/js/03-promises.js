@@ -11,15 +11,17 @@ function createPromise(position, delay) {
       
       if (position < data.amount) {
         if (shouldResolve) {
-        position += 1
-        //console.log('resolve');
-        console.log(`position`, position);
+          position += 1
+          delay += data.step
+          console.log(typeof delay);
+          //console.log(`position`, position);
           console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
           Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`)
      } else {
-        position += 1 
+          position += 1 
+          delay += data.step
         //console.log('reject');
-        console.log(`position`, position);
+          //console.log(`position`, position);
           console.log(`❌ Rejected promise ${position} in ${delay}ms`);
           Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`)
     }
@@ -27,8 +29,8 @@ function createPromise(position, delay) {
         clearInterval(timerId)
       }
 
-    }, delay),
-    data.delay)
+    }, data.step),
+    delay)
   })
 }
 
@@ -44,16 +46,16 @@ function onFormClik(e) {
   const elem = e.currentTarget.elements
   // data[e.target.name] = e.target.value
 
-  data.delay = elem.delay.value
-  data.step = elem.step.value
-  data.amount = elem.amount.value
-  
+  data.delay = Number(elem.delay.value)
+  data.step = Number(elem.step.value)
+  data.amount = Number(elem.amount.value)
+  console.log(typeof data.step);
 }
 
 function onFormsubmit(e) {
   e.preventDefault()
   console.log(data);
-  createPromise(data.amount, data.step)
+  createPromise(data.amount, data.delay)
   
 }
 // const refs = {
