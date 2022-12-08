@@ -43,16 +43,16 @@ function onFormsubmit(e) {
   e.preventDefault()
   let res = data.delay
   for (let i = 0; i <= data.amount; i += 1) {
-    res = res + data.step
     createPromise(i, res)
-  .then(({ position, delay }) => {
-    Notify.success(`✅ Fulfilled promise ${position + 1} in ${delay}ms`)
+    .then(({ position, delay }) => {
+      Notify.success(`✅ Fulfilled promise ${position + 1} in ${delay}ms`)
+      
+    })
+    .catch(({ position, delay }) => {
+      Notify.failure(`❌ Rejected promise ${position + 1} in ${delay}ms`)
+    });
+    res = res + data.step
     
-  })
-  .catch(({ position, delay }) => {
-    Notify.failure(`❌ Rejected promise ${position + 1} in ${delay}ms`)
-  });
-
   }
 }
 
